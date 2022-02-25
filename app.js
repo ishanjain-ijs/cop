@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }))
 // app.use("/Files", express.static(path.join(__dirname, "/Files")));
 
 app.use(cookieParser());
-
+app.use('/', require('./routes/adminLogin'))
 app.use("/admin/register", require("./adminpanel/register"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));

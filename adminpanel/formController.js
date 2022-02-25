@@ -2,11 +2,7 @@ const db = require('../models/index')
 const User = db.users
 // const Form = require('../models/forms')
 const Form = db.forms
-// const Form = db.forms
-// const bcrypt = require("bcrypt");
-// const updateUser =  async (req, res) => {
 
-// }
 
 const getAllForms = async (req,res,next) =>{
   try{

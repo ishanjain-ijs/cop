@@ -9,6 +9,7 @@
   "author": "Ishan Jain",
   "license": "ISC",
   "dependencies": {
+    "@azure/msal-node": "^1.6.0",
     "axios": "^0.26.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
@@ -20,6 +21,7 @@
     "jwt-decode": "^3.1.2",
     "multer": "^1.4.4",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.2",
     "sequelize": "^6.16.1"
   }
 }

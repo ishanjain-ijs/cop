@@ -3,7 +3,7 @@ const db = require('../models/index')
 const User = db.users
 // const Form = require('../models/forms')
 const Form = db.forms
-// const bcrypt = require("bcrypt");
+
 const jwt_decode = require('jwt-decode');
 const getAllForms = async (req, res, next) => {
   try {
@@ -24,6 +24,7 @@ const getAllForms = async (req, res, next) => {
 
 const createForm = async (req, res, next) => {
   var token = req.headers.authorization.split(" ")[1];
+  
   var decode = jwt_decode(token);
   try {
     const {
@@ -76,30 +77,6 @@ const createForm = async (req, res, next) => {
     next(error);
   }
 };
-// module.exports.createForm = async (userId, form) => {
-//     try {
-//         const form = await Form.create({
-//             PONo: form.PONo,
-//             legalEntity: form.legalEntity,
-//             GST: form.GST,
-//             MSME: form.MSME,
-//             SEZ: form.SEZ,
-//             bAddress: form.bAddress,
-//             sAddress: form.sAddress,
-//             PMName: form.PMName,
-//             PMEmail: form.PMEmail,
-//             PMPhoneNo: form.PMPhoneNo,
-//             FTName: form.FTName,
-//             FTEmail: form.FTEmail,
-//             FTPhoneNo: form.FTPhoneNo,
-//             userId: userId
-//         });
-//         console.log(">> Created form: " + JSON.stringify(comment, null, 4));
-//         return form;
-//     } catch (err) {
-//         console.log(">> Error while creating form: ", err);
-//     }
-//   };
 
 module.exports = {
   //   getAll,
