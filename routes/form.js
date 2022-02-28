@@ -10,7 +10,7 @@ router.route('/')
     .get(formController.getAllForms)
 
 router.route('/:id')
-    .post(verifyJWT ,formController.createForm)
+    .post(verifyJWT ,formController.upload, formController.createForm)
 //     .put( verifyJWT ,postsController.updatePost)
 //     .delete(verifyJWT, postsController.deletePost);
 

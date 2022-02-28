@@ -13,11 +13,13 @@ dotenv.config({ path: './config.env' });
 
 const sequelize = require('./db/conn');
 // require('./models')
-app.use(cors());
+app.use(cors({
+  credentials: true, origin: true
+}));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 // app.use("/Files", express.static(path.join(__dirname, "/Files")));
-
+app.use('/Images', express.static('./Images'))
 app.use(cookieParser());
 app.use('/', require('./routes/adminLogin'))
 app.use("/admin/register", require("./adminpanel/register"));
