@@ -8,6 +8,9 @@ const path = require('path')
 
 const jwt_decode = require('jwt-decode');
 const getAllForms = async (req, res, next) => {
+  // var token = req.headers.authorization.split(" ")[1];
+  
+  // var decode = jwt_decode(token);
   try {
     const form = await Form.findAll({
       include:[{
@@ -45,7 +48,7 @@ const createForm = async (req, res, next) => {
       FTPhoneNo
     } = req.body;
     const image = req.file.path;
-    const user_id = req.params.id
+    const user_id = decode.userid
     const dataCreate = {
       PONo,
       legalEntity,

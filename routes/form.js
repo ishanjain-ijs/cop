@@ -9,7 +9,7 @@ const verifyJWT = require('../middleware/verifyJWT')
 router.route('/')
     .get(formController.getAllForms)
 
-router.route('/:id')
+router.route('/')
     .post(verifyJWT ,formController.upload, formController.createForm)
 //     .put( verifyJWT ,postsController.updatePost)
 //     .delete(verifyJWT, postsController.deletePost);

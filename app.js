@@ -17,7 +17,7 @@ app.use(cors({
   credentials: true, origin: true
 }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: false }))
 // app.use("/Files", express.static(path.join(__dirname, "/Files")));
 app.use('/Images', express.static('./Images'))
 app.use(cookieParser());
