@@ -1,10 +1,9 @@
-const User = require('../models/users')
+const User = require("../models/users");
 // // const User = db.users
 // const bcrypt = require('bcrypt');
 
 // const dotenv = require("dotenv");
 // dotenv.config({ path: './config.env' });
-
 
 // const handleNewUser = async (req, res) => {
 //     const {  fullName, username, password} = req.body;
@@ -14,16 +13,15 @@ const User = require('../models/users')
 //       };
 //     if (!fullName || !username || !password) return res.status(400).json({ 'message': 'All fields are required.' });
 
-
 //     try {
-        
-//         const hashedPwd = await bcrypt.hash(password, 10);        
+
+//         const hashedPwd = await bcrypt.hash(password, 10);
 //         const result = await User.create({
 //             "fullName": fullName,
 //             // "email": email,
 //             "username": username,
 //             "password": hashedPwd,
-     
+
 //         }, config)
 //         .then(result => {
 //             // console.log(result)
@@ -32,8 +30,8 @@ const User = require('../models/users')
 //         .catch(err => {
 //             console.log(err)
 //         })
-        
-//     } 
+
+//     }
 //     catch (err) {
 //         res.status(500).json({ 'message': err.message });
 //     }
@@ -41,13 +39,12 @@ const User = require('../models/users')
 
 // module.exports = { handleNewUser };
 
-
 const axios = require("axios");
 
 // axios.post('https://graph.microsoft.com/v1.0/users')
 const handleNewUser = async (req, res) => {
-  const token = req.headers["x-access-token"]
-  
+  const token = req.headers.authorization.split(" ")[1];
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -57,19 +54,20 @@ const handleNewUser = async (req, res) => {
   if (!displayName || !mailNickname || !userPrincipalName || !passwordProfile)
     return res.status(400).json({ message: "All fields are required." });
   try {
-   
     const result = await axios
-      .post(
-        "https://graph.microsoft.com/v1.0/users",
-        req.body
-        ,
-        config
-      )
+      .post("https://graph.microsoft.com/v1.0/users", req.body, config)
       .then((result) => {
         // console.log(result);
-        
       });
-      res.status(201).json({ success: `New user ${displayName} created!`, result })
+    const userdetails = await User.create({
+      "fullName": displayName,
+      // "email": email,
+      "username": userPrincipalName,
+      "password": passwordProfile.password,
+    });
+    res
+      .status(201)
+      .json({ success: `New user ${displayName} created!`, result })
       .catch((err) => {
         console.log(err);
       });
