@@ -1,14 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const registerController = require("./registerController");
-// const config = {
-//     headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${token}`
-//     } 
-// }
-  
+const handleNewUser = require('./registerController');
 
-router.post("/", registerController.handleNewUser);
+router.route('/')
+    .post(handleNewUser);
+
 
 module.exports = router;

@@ -24,4 +24,5 @@ const getAllForms = async (req,res,next) =>{
 module.exports = {
     // updateUser,
     getAllForms
+    // deleteForm
 };

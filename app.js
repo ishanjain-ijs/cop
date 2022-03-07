@@ -19,7 +19,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 // app.use("/Files", express.static(path.join(__dirname, "/Files")));
-app.use('/Images', express.static('./Images'))
+app.use('/uploads', express.static('./uploads'))
 app.use(cookieParser());
 app.use('/', require('./routes/adminLogin'))
 app.use("/admin/register", require("./adminpanel/register"));

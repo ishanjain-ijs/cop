@@ -24,7 +24,29 @@ const getAllUsers = async (req,res,next) =>{
       next(error);
   }
 }
-
+const getUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const findUserById = await User.findByPk(id, {
+      attributes:['username'],
+      include:[{
+        model: Form,
+      }]
+    });
+    if (!findUserById) {
+      res.send({
+        status: "error",
+        message: `user with id ${id} not found`,
+      });
+    }
+    res.send({
+      status: "success",
+      data: findUserById,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -48,24 +70,7 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-const getUser = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const findUserById = await User.findByPk(id);
-    if (!findUserById) {
-      res.send({
-        status: "error",
-        message: `user with id ${id} not found`,
-      });
-    }
-    res.send({
-      status: "success",
-      data: findUserById,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+
 module.exports = {
   // updateUser,
   getAllUsers,

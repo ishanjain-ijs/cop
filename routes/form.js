@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const formController = require('../controllers/formController');
-
+// const upload = require('../middleware/upload')
 const verifyJWT = require('../middleware/verifyJWT')
 // router.route('/')
 //     .get(formController.getAll)
@@ -11,10 +11,10 @@ router.route('/')
 
 router.route('/')
     .post(verifyJWT ,formController.upload, formController.createForm)
-//     .put( verifyJWT ,postsController.updatePost)
-//     .delete(verifyJWT, postsController.deletePost);
 
-// router.route('/:id')
-//     .get(postsController.getPost);
+    
+
+router.route('/:id')
+    .delete( formController.deleteForm);
 
 module.exports = router;

@@ -112,12 +112,33 @@ const upload = multer({
 }).single('image')
 
 
-
-
+const deleteForm = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const findFormById = await Form.findByPk(id);
+    if (!findFormById) {
+      res.status(404).json("Form not found!");
+    }
+    const deleteForm = findFormById.destroy();
+    if (!deleteForm) {
+      res.status(503).send({
+        status: "error",
+        message: `Form with id ${id} failed to delete`,
+      });
+    }
+    res.status(200).send({
+      status: "success",
+      message: `Form with id ${id} deleted`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   //   getAll,
   getAllForms,
   createForm,
-  upload
+  deleteForm,
+  upload,
 };
