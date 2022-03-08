@@ -4,6 +4,7 @@ const multer = require('multer')
 const User = db.users
 // const Form = require('../models/forms')
 const Form = db.forms
+const TempForm = require('../models/tempForm')
 const path = require('path')
 
 const jwt_decode = require('jwt-decode');
@@ -134,11 +135,73 @@ const deleteForm = async (req, res, next) => {
     next(error);
   }
 };
+// const updateForm = async (req, res, next) => {
+//   var token = req.headers.authorization.split(" ")[1];
+  
+//   var decode = jwt_decode(token);
+//   try {
+//     const {
+//       PONo,
+//       legalEntity,
+//       GST,
+//       MSME,
+//       SEZ,
+//       bAddress,
+//       sAddress,
+//       PMName,
+//       PMEmail,
+//       PMPhoneNo,
+//       FTName,
+//       FTEmail,
+//       FTPhoneNo
+//     } = req.body;
+//     const image = req.file.path;
+//     const user_id = decode.userid
+//     const dataUpdate = {
+//       PONo,
+//       legalEntity,
+//       GST,
+//       image,
+//       MSME,
+//       SEZ,
+//       bAddress,
+//       sAddress,
+//       PMName,
+//       PMEmail,
+//       PMPhoneNo,
+//       FTName,
+//       FTEmail,
+//       FTPhoneNo,
+//       user_id,
+//     };
+//     const id = req.params
+//     const updateForm = await TempForm.create(dataUpdate, {where: {id:id}});
+//     if (!updateForm) {
+//       res.send(
+//         {
+//           status: "error",
+//           message: "Form updation failed",
+//         },
+//         500
+//       );
+//     }
+//     res.send({
+//       status: "success",
+//       data: {dataUpdate, decode}
+//     });
+//   await updateForm.save();
+//   } catch (error) {
+//     next(error);
+//   }
+  
+// // };
+// }
 
 module.exports = {
   //   getAll,
   getAllForms,
   createForm,
   deleteForm,
-  upload,
-};
+  // updateForm,
+  upload
+}

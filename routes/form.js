@@ -15,6 +15,7 @@ router.route('/')
     
 
 router.route('/:id')
-    .delete( formController.deleteForm);
+    .delete( formController.deleteForm)
+    // .post(verifyJWT, formController.updateForm)
 
 module.exports = router;

@@ -11,7 +11,7 @@ const Form = db.forms
 const getAllUsers = async (req,res,next) =>{
   try{
     const user = await User.findAll({
-      attributes:['username'],
+      attributes:['username', 'id'],
       include:[{
         model: Form,
       }]
