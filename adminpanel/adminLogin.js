@@ -3,10 +3,10 @@ const msal = require("@azure/msal-node");
 const app = express();
 const config = {
     auth: {
-      clientId: "e801ff5b-59b6-4a51-ba1d-35a4815c921f",
+      clientId: "23556e38-150f-428c-ba08-e450a6e32376",
       authority:
-        "https://login.microsoftonline.com/b3d5ca7e-6dcd-4510-9a4c-8a4733ff6f5e",
-      clientSecret: "hWP7Q~V_rwrjsljat2Jrr4BHyXnqYLR3lI3we",
+        "https://login.microsoftonline.com/e4e34038-ea1f-4882-b6e8-ccd776459ca0",
+      clientSecret: "cKB7Q~rsnncGe2cgiUStqC.I9V2UR3K3ACJ7n",
     },
     system: {
       loggerOptions: {
