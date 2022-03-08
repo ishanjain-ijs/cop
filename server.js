@@ -31,7 +31,7 @@ app.use("/form", require("./routes/form"));
 // app.use("admin/form", require("./routes/form"));
 
 app.use("/admin/user",require("./adminpanel/user"))
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 app.get("/signup", (req, res) => {
   res.send(`Hello from the server`);

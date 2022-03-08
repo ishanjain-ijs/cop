@@ -5,7 +5,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.sequelize.sync({force:false,match:/cof$/})
+db.sequelize.sync({force:false,match:/COF$/})
 .then(()=>{
   console.log('yes re-sync')
 })
