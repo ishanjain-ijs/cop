@@ -1,9 +1,9 @@
 const dotenv = require("dotenv");
-
+const bodyParser = require('body-parser')
 const express = require('express');
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
-
+const uploadMultiple = require('./controllers/upload')
 const path = require("path");
 // const verifyJWT = require('./middleware/verifyJWT');
 const app = express();
@@ -16,8 +16,9 @@ const sequelize = require('./db/conn');
 app.use(cors({
   credentials: true, origin: true
 }));
+app.use(bodyParser.json())
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 // app.use("/Files", express.static(path.join(__dirname, "/Files")));
 app.use('/uploads', express.static('./uploads'))
 app.use(cookieParser());
@@ -26,11 +27,23 @@ app.use("/admin/register", require("./adminpanel/register"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/form", require("./routes/form"));
+// app.use("/upload", require("./routes/upload"));
+
 // app.use("/upload", require("./routes/file"));
 
 // app.use("admin/form", require("./routes/form"));
 
 app.use("/admin/user",require("./adminpanel/user"))
+app.post('/uploadfile', uploadMultiple, function (req, res, next) {
+
+  if(req.files){
+      res.send(req.files)
+      // console.log(req.files)
+
+      console.log("files uploaded")
+  }
+  
+})
 const PORT = process.env.PORT || 3000;
 
 app.get("/signup", (req, res) => {

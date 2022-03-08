@@ -10,7 +10,7 @@ router.route('/')
     .get(formController.getAllForms)
 
 router.route('/')
-    .post(verifyJWT ,formController.upload, formController.createForm)
+    .post(verifyJWT , formController.createForm)
 
     
 

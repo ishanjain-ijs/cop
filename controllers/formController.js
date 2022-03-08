@@ -32,6 +32,7 @@ const createForm = async (req, res, next) => {
   var token = req.headers.authorization.split(" ")[1];
   
   var decode = jwt_decode(token);
+  console.log(req.body)
   try {
     const {
       PONo,
@@ -48,13 +49,12 @@ const createForm = async (req, res, next) => {
       FTEmail,
       FTPhoneNo
     } = req.body;
-    const image = req.file.path;
+    // const image = req.file.path;
     const user_id = decode.userid
     const dataCreate = {
       PONo,
       legalEntity,
       GST,
-      image,
       MSME,
       SEZ,
       bAddress,
@@ -65,8 +65,7 @@ const createForm = async (req, res, next) => {
       FTName,
       FTEmail,
       FTPhoneNo,
-      user_id,
-      image
+      user_id
     };
     const createForm = await Form.create(dataCreate);
     if (!createForm) {
@@ -88,32 +87,31 @@ const createForm = async (req, res, next) => {
 };
 
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, 'Images')
-  },
-  filename: (req, file, cb) => {
-      cb(null, file.originalname)
-  }
-})
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//       cb(null, 'Images')
+//   },
+//   filename: (req, file, cb) => {
+//       cb(null, file.originalname)
+//   }
+// })
 
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: '1000000' },
-  fileFilter: (req, file, cb) => {
-      const fileTypes = /jpeg|jpg|png|pdf/
-      const mimeType = fileTypes.test(file.mimetype)  
-      const extname = fileTypes.test(path.extname(file.originalname))
+// const upload = multer({
+//   storage: storage,
+//   limits: { fileSize: '1000000' },
+//   fileFilter: (req, file, cb) => {
+//       const fileTypes = /jpg|png|JPG|PNG|JPEG|jpeg|pdf|PDF/
+//       const mimeType = fileTypes.test(file.mimetype)  
+//       const extname = fileTypes.test(path.extname(file.originalname))
 
-      if(mimeType && extname) {
-          return cb(null, true)
-      }
-      cb('Give proper files formate to upload')
-  }
-}).single('image')
+//       if(mimeType && extname) {
+//           return cb(null, true)
+//       }
+//       cb('Give proper files formate to upload')
+//   }
+// })
 
-
-const deleteForm = async (req, res, next) => {
+const deleteForm = async(req, res, next) =>{
   try {
     const { id } = req.params;
     const findFormById = await Form.findByPk(id);
@@ -134,7 +132,7 @@ const deleteForm = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}
 // const updateForm = async (req, res, next) => {
 //   var token = req.headers.authorization.split(" ")[1];
   
@@ -203,5 +201,4 @@ module.exports = {
   createForm,
   deleteForm,
   // updateForm,
-  upload
 }

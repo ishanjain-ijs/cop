@@ -13,9 +13,7 @@ const Form = sequelize.define("Form", {
   GST: {
     type: Sequelize.BOOLEAN,
   },
-  image: {
-    type: Sequelize.STRING
-  },
+ 
   MSME: {
     type: Sequelize.BOOLEAN,
   },
