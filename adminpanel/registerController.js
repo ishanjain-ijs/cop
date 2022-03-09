@@ -28,6 +28,7 @@ const handleNewUser = async (req, res) => {
             res.status(201).json({ 'success': `New user ${fullName} created!` , result});
         })
         .catch(err => {
+            res.json({'message': `User with username ${username} already exist`})
             console.log(err)
         })
 

@@ -10,7 +10,7 @@ router.route('/')
     .get(formController.getAllForms)
 
 router.route('/')
-    .post(verifyJWT , formController.createForm)
+    .post(verifyJWT , formController.upload.fields([{ name: 'PONo_doc', maxCount: 1 }, { name: 'GST_doc', maxCount: 1 }, { name: 'MSME_doc', maxCount: 1 }, { name: 'SEZ_doc', maxCount: 1 }]) ,formController.createForm)
 
     
 

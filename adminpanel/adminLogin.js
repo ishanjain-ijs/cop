@@ -48,7 +48,7 @@ const config = {
       .acquireTokenByCode(tokenRequest)
       .then((response) => {
         console.log("\nResponse: \n:", response);
-        res.sendStatus(200);
+        res.send(response);
       })
       .catch((error) => {
         console.log(error);

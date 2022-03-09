@@ -34,16 +34,16 @@ app.use("/form", require("./routes/form"));
 // app.use("admin/form", require("./routes/form"));
 
 app.use("/admin/user",require("./adminpanel/user"))
-app.post('/uploadfile', uploadMultiple, function (req, res, next) {
+// app.post('/uploadfile', uploadMultiple, function (req, res, next) {
 
-  if(req.files){
-      res.send(req.files)
-      // console.log(req.files)
+//   if(req.files){
+//       res.send(req.files)
+//       // console.log(req.files)
 
-      console.log("files uploaded")
-  }
+//       console.log("files uploaded")
+//   }
   
-})
+// })
 const PORT = process.env.PORT || 3000;
 
 app.get("/signup", (req, res) => {

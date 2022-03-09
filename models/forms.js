@@ -6,6 +6,10 @@ const Form = sequelize.define("Form", {
     type: Sequelize.INTEGER,
     // allowNull: false
   },
+  PONo_doc: {
+    type: Sequelize.STRING,
+    // allowNull: false,
+  },
   legalEntity: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -13,12 +17,24 @@ const Form = sequelize.define("Form", {
   GST: {
     type: Sequelize.BOOLEAN,
   },
- 
+  GST_doc: {
+    type: Sequelize.STRING,
+    // allowNull: false,
+  },
+
   MSME: {
     type: Sequelize.BOOLEAN,
   },
+  MSME_doc: {
+    type: Sequelize.STRING,
+    // allowNull: false,
+  },
   SEZ: {
     type: Sequelize.BOOLEAN,
+  },
+  SEZ_doc: {
+    type: Sequelize.STRING,
+    // allowNull: false,
   },
   bAddress: {
     type: Sequelize.STRING,
@@ -52,9 +68,10 @@ const Form = sequelize.define("Form", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  user_id:{
-    type: Sequelize.INTEGER
-  }
+
+  user_id: {
+    type: Sequelize.INTEGER,
+  },
 });
 
 module.exports = Form;

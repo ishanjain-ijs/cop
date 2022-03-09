@@ -6,7 +6,7 @@ const User = db.users
 const Form = db.forms
 const TempForm = require('../models/tempForm')
 const path = require('path')
-
+const fs = require('fs')
 const jwt_decode = require('jwt-decode');
 const getAllForms = async (req, res, next) => {
   // var token = req.headers.authorization.split(" ")[1];
@@ -27,12 +27,35 @@ const getAllForms = async (req, res, next) => {
     next(error);
   }
 };
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'Images')
+  },
+  filename: (req, file, cb) => {
+      cb(null, Date.now()+file.originalname)
+  }
+})
 
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: '5242880' },
+  fileFilter: (req, file, cb) => {
+      const fileTypes = /jpg|png|JPG|PNG|JPEG|jpeg|pdf|PDF/
+      const mimeType = fileTypes.test(file.mimetype)  
+      const extname = fileTypes.test(path.extname(file.originalname))
+
+      if(mimeType && extname) {
+          return cb(null, true)
+      }
+      cb('Give proper files formate to upload')
+  }
+})
 const createForm = async (req, res, next) => {
+  // const uploadMultiple = upload.
   var token = req.headers.authorization.split(" ")[1];
   
   var decode = jwt_decode(token);
-  console.log(req.body)
+  // console.log(req.body)
   try {
     const {
       PONo,
@@ -49,12 +72,16 @@ const createForm = async (req, res, next) => {
       FTEmail,
       FTPhoneNo
     } = req.body;
-    // const image = req.file.path;
+    const PONo_doc = req.files['PONo_doc'][0].path
+    const GST_doc = req.files['GST_doc'][0].path
+    const MSME_doc = req.files['MSME_doc'][0].path
+    const SEZ_doc = req.files['SEZ_doc'][0].path
     const user_id = decode.userid
     const dataCreate = {
       PONo,
       legalEntity,
       GST,
+      PONo_doc,
       MSME,
       SEZ,
       bAddress,
@@ -65,23 +92,20 @@ const createForm = async (req, res, next) => {
       FTName,
       FTEmail,
       FTPhoneNo,
-      user_id
+      user_id,
+      GST_doc,
+      MSME_doc,
+      SEZ_doc
     };
     const createForm = await Form.create(dataCreate);
-    if (!createForm) {
-      res.send(
-        {
-          status: "error",
-          message: "Form failed",
-        },
-        500
-      );
-    }
-    res.send({
-      status: "success",
-      data: {createForm, decode}
-    });
+    res.status(201).json({ 'Success': 'created' })
   } catch (error) {
+    fs.unlinkSync(req.files['PONo_doc'][0].path)
+    fs.unlinkSync(req.files['GST_doc'][0].path)
+    fs.unlinkSync(req.files['MSME_doc'][0].path)
+    fs.unlinkSync(req.files['SEZ_doc'][0].path)
+
+    res.status(404).json({ error: error.message })
     next(error);
   }
 };
@@ -110,6 +134,14 @@ const createForm = async (req, res, next) => {
 //       cb('Give proper files formate to upload')
 //   }
 // })
+
+// const uploadMultiple = upload.fields([
+//       { name: "PONo_doc", maxCount: 1 },
+//       { name: "GST_doc", maxCount: 1 },
+//       { name: "MSME_doc", maxCount: 1 },
+//       { name: "SEZ_doc", maxCount: 1 }
+//     ])
+
 
 const deleteForm = async(req, res, next) =>{
   try {
@@ -200,5 +232,5 @@ module.exports = {
   getAllForms,
   createForm,
   deleteForm,
-  // updateForm,
+  upload
 }
