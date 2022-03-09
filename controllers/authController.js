@@ -8,11 +8,9 @@ const handleLogin = async (req, res) => {
 
     const foundUser = await User.findOne({where: {username: username} });
     if (!foundUser) return res.sendStatus(401); 
-    
+    const userid = foundUser.id
     const match = await bcrypt.compare(password, foundUser.password);
     if (match) {
-        
-  
         const accessToken = jwt.sign(
             {
                     "username": foundUser.username,
@@ -32,7 +30,7 @@ const handleLogin = async (req, res) => {
         // console.log(result);
 
         res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None',secure: true,  maxAge: 24 * 60 * 60 * 1000 }); //
-        res.status(201).json({ 'success': `Loged in successfully` , accessToken});
+        res.status(201).json({ 'success': `Loged in successfully` , accessToken, userid});
     } else {
         res.sendStatus(401);
     }
