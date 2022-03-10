@@ -116,7 +116,7 @@ const createForm = async (req, res, next) => {
         refreshToken: process.env.REFRESH_TOKEN
       }
      });
-     var tableHTML ='<table border="1" style="width:100%", >' + 
+     var tableHTML ='<h2>Hello</h2><h3>New Customer is onboarder.</h3><br><h3>Please find the details below:</h3><table border="1" style="width:100%", >' + 
    "<tr><td>Username</td><td>" +
    decode.username + 
    "</td></tr>" +
