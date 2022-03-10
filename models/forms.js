@@ -72,6 +72,11 @@ const Form = sequelize.define("Form", {
   user_id: {
     type: Sequelize.INTEGER,
   },
+  isConfirmed: {
+    type: Sequelize.ENUM("Yes", "No"),
+    enum: ["Yes", "No"],
+    defaultValue: "No",
+  },
 });
 
 module.exports = Form;

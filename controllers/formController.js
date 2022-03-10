@@ -4,10 +4,14 @@ const multer = require('multer')
 const User = db.users
 // const Form = require('../models/forms')
 const Form = db.forms
+const nodemailer = require("nodemailer");
 const TempForm = require('../models/tempForm')
 const path = require('path')
 const fs = require('fs')
 const jwt_decode = require('jwt-decode');
+
+
+
 const getAllForms = async (req, res, next) => {
   // var token = req.headers.authorization.split(" ")[1];
   
@@ -70,7 +74,8 @@ const createForm = async (req, res, next) => {
       PMPhoneNo,
       FTName,
       FTEmail,
-      FTPhoneNo
+      FTPhoneNo,
+      isConfirmed
     } = req.body;
     const PONo_doc = req.files['PONo_doc'][0].path
     const GST_doc = req.files['GST_doc'][0].path
@@ -95,10 +100,48 @@ const createForm = async (req, res, next) => {
       user_id,
       GST_doc,
       MSME_doc,
-      SEZ_doc
+      SEZ_doc,
+      isConfirmed
     };
     const createForm = await Form.create(dataCreate);
-    res.status(201).json({ 'Success': 'created' })
+    res.status(201).json({ 'Success': 'created', createForm })
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.PASSWORD,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN
+      }
+     });
+     var tableHTML ='<table border="1" style="width:100%", >' + 
+   "<tr><td>Username</td><td>" +
+   decode.username + 
+   "</td></tr>" +
+   "<tr><td>PO Number</td><td>" + 
+   PONo + 
+   "</td></tr>" +
+   "<tr><td>Project Manager Name</td><td>" + 
+   PMName + 
+   "</td></tr>" +
+   "<tr><td>Finanace Manager Name</td><td>" + 
+   FTName + 
+  "</td></tr>" +
+   "</table>";
+     const mailConfigurations = {
+      from: 'ishanijs1910@gmail.com',
+      to: 'ishanagjain@gmail.com',
+      subject: `User ${decode.username} filled the form`,
+      html: tableHTML
+  };
+      
+  transporter.sendMail(mailConfigurations, function(error, info){
+      if (error) throw Error(error);
+         console.log('Email Sent Successfully');
+      console.log(info);
+  });
   } catch (error) {
     fs.unlinkSync(req.files['PONo_doc'][0].path)
     fs.unlinkSync(req.files['GST_doc'][0].path)
@@ -108,39 +151,12 @@ const createForm = async (req, res, next) => {
     res.status(404).json({ error: error.message })
     next(error);
   }
+  
 };
 
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//       cb(null, 'Images')
-//   },
-//   filename: (req, file, cb) => {
-//       cb(null, file.originalname)
-//   }
-// })
 
-// const upload = multer({
-//   storage: storage,
-//   limits: { fileSize: '1000000' },
-//   fileFilter: (req, file, cb) => {
-//       const fileTypes = /jpg|png|JPG|PNG|JPEG|jpeg|pdf|PDF/
-//       const mimeType = fileTypes.test(file.mimetype)  
-//       const extname = fileTypes.test(path.extname(file.originalname))
 
-//       if(mimeType && extname) {
-//           return cb(null, true)
-//       }
-//       cb('Give proper files formate to upload')
-//   }
-// })
-
-// const uploadMultiple = upload.fields([
-//       { name: "PONo_doc", maxCount: 1 },
-//       { name: "GST_doc", maxCount: 1 },
-//       { name: "MSME_doc", maxCount: 1 },
-//       { name: "SEZ_doc", maxCount: 1 }
-//     ])
 
 
 const deleteForm = async(req, res, next) =>{
