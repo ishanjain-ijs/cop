@@ -3,7 +3,7 @@ const sequelize = require("../db/conn");
 
 const Form = sequelize.define("Form", {
   PONo: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     // allowNull: false
   },
   PONo_doc: {
@@ -12,7 +12,7 @@ const Form = sequelize.define("Form", {
   },
   legalEntity: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   GST: {
     type: Sequelize.BOOLEAN,
@@ -38,44 +38,42 @@ const Form = sequelize.define("Form", {
   },
   bAddress: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   sAddress: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   PMName: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   PMEmail: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   PMPhoneNo: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
+    type: Sequelize.STRING,
+    // allowNull: false,
   },
   FTName: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   FTEmail: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   FTPhoneNo: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
+    type: Sequelize.STRING,
+    // allowNull: false,
   },
 
   user_id: {
     type: Sequelize.INTEGER,
   },
   isConfirmed: {
-    type: Sequelize.ENUM("Yes", "No"),
-    enum: ["Yes", "No"],
-    defaultValue: "No",
+    type: Sequelize.BOOLEAN
   },
 });
 

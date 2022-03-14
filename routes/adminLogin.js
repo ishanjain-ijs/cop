@@ -5,7 +5,7 @@ const adminLogin = require('../adminpanel/adminLogin');
 router.route('/')
     .get(adminLogin.getLogin);
 
-router.route('/redirect') 
+router.route('/home') 
     .get(adminLogin.getRedirect)
 
 module.exports = router;

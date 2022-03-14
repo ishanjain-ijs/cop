@@ -25,7 +25,7 @@ const config = {
   const getLogin = (req, res) => {
     const authCodeUrlParameters = {
         scopes: ["user.read"],
-        redirectUri: "https://ctcof2.azurewebsites.net/redirect",
+        redirectUri: "http://localhost:3000/home",
     };
   
     // get url to sign user in and consent to scopes needed for application
@@ -41,7 +41,7 @@ const config = {
     const tokenRequest = {
       code: req.query.code,
       scopes: ["user.read"],
-      redirectUri: "https://ctcof2.azurewebsites.net/redirect",
+      redirectUri: "http://localhost:3000/home",
     };
   
     cca
